@@ -62,6 +62,8 @@ class Order(models.Model):
 
     total_price = models.PositiveIntegerField(default=0)
 
+    created_at = models.DateTimeField("Дата создания", auto_now_add=True)
+
     def save(self, *args, **kwargs):
         """Высчитывает и сохраняет сумму всего заказа."""
 
