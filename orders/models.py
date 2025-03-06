@@ -64,6 +64,11 @@ class Order(models.Model):
 
     created_at = models.DateTimeField("Дата создания", auto_now_add=True)
 
+    class Meta:
+        ordering = ["created_at"]
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
+
     def save(self, *args, **kwargs):
         """Высчитывает и сохраняет сумму всего заказа."""
 
@@ -73,6 +78,9 @@ class Order(models.Model):
         )
 
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.id} - {self.total_price:.2f}"
 
 
 class ItemQuantity(models.Model):
