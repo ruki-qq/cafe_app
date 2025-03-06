@@ -72,7 +72,7 @@ class ShortOrderSerializer(serializers.ModelSerializer):
         read_only_fields = ["__all__"]
 
 
-class ReadRecipeSerializer(ShortOrderSerializer):
+class ReadOrderSerializer(ShortOrderSerializer):
     """Serializer для полного описания заказа."""
 
     items = ItemsField()
@@ -82,7 +82,7 @@ class ReadRecipeSerializer(ShortOrderSerializer):
         exclude = ["created_at"]
 
 
-class WriteRecipeSerializer(ReadRecipeSerializer):
+class WriteOrderSerializer(ReadOrderSerializer):
     """Serializer для записи заказов."""
 
     @staticmethod
