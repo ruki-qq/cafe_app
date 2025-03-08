@@ -43,6 +43,7 @@ class Order(models.Model):
         choices=STATUS_CHOICES,
         default=constants.Status.PAID.value,
         verbose_name="Статус заказа",
+        max_length=20,
     )
 
     table_number = models.PositiveIntegerField(
@@ -68,16 +69,6 @@ class Order(models.Model):
         ordering = ["created_at"]
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
-
-    def save(self, *args, **kwargs):
-        """Высчитывает и сохраняет сумму всего заказа."""
-
-        self.total_price = sum(
-            item_quantity.item.price * item_quantity.quantity
-            for item_quantity in self.itemquantity_set.all()
-        )
-
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.id} - {self.total_price:.2f}"
