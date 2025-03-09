@@ -7,7 +7,7 @@ from orders.models import ItemQuantity
 @receiver([post_save, post_delete], sender=ItemQuantity)
 def update_order_items_price(sender, instance, **kwargs):
     """
-    Update the items_price of the associated order whenever an ItemQuantity is saved or deleted.
+    Высчитать total_price заказа когда ItemQuantity сохраняется или удаляется.
     """
     order = instance.order
     order.total_price = sum(
