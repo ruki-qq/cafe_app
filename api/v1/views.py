@@ -1,5 +1,8 @@
+from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import permissions, viewsets
 
+from api.v1.filters import OrderFilter
+from api.v1.mixins import WriteMethodsMixinView
 from api.v1.serializers import (
     ItemSerializer,
     ReadOrderSerializer,
@@ -13,14 +16,11 @@ class ItemViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ItemSerializer
     pagination_class = None
 
-    # filter_backends = [DjangoFilterBackend]
-    # filterset_class = ItemFilter
 
-
-class OrderViewSet(viewsets.ModelViewSet):
+class OrderViewSet(WriteMethodsMixinView, viewsets.ModelViewSet):
     queryset = Order.objects.all()
-    # filter_backends = [DjangoFilterBackend]
-    # filterset_class = OrderFilter
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = OrderFilter
 
     def get_serializer_class(self):
         if self.request.method in permissions.SAFE_METHODS:
